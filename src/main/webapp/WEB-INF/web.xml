@@ -11,17 +11,9 @@
         <servlet-name>ForwardingServlet</servlet-name>
         <servlet-class>org.wso2.is.sso.quickStartGuide.ForwardingServlet</servlet-class>
     </servlet>
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>ForwardingServlet</servlet-name>-->
-        <!--<url-pattern>/home.jsp</url-pattern>-->
-    <!--</servlet-mapping>-->
     <servlet-mapping>
         <servlet-name>ForwardingServlet</servlet-name>
-        <url-pattern>/samlsso</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ForwardingServlet</servlet-name>
-        <url-pattern>/logout</url-pattern>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
     <filter>

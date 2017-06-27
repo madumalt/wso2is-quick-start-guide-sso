@@ -1,15 +1,11 @@
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.Iterator" %>
 <%@ page import="org.wso2.carbon.identity.sso.agent.bean.LoggedInSessionBean" %>
-<%@ page import="org.wso2.carbon.identity.sso.agent.bean.SSOAgentConfig" %>
 <%@ page import="org.wso2.carbon.identity.sso.agent.SSOAgentConstants" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -39,15 +35,15 @@
 
 <%
     String subjectId = null;
-    Map<String, String> saml2SSOAttributes = null;
+    //Map<String, String> saml2SSOAttributes = null;
 
-    final String SAML_SSO_URL = "/samlsso";
-    final String SAML_LOGOUT_URL = "/logout";
+    final String SAML_SSO_URL = "samlsso";
+    final String SAML_LOGOUT_URL = "logout";
 
-    // if web-browser session is there but no session bean set,
-    // invalidate session and direct back to login page
-    if(request.getSession(false) != null
-            && request.getSession(false).getAttribute(SSOAgentConstants.SESSION_BEAN_NAME) == null){
+// if web-browser session is there but no session bean set,
+// invalidate session and direct back to login page
+    if (request.getSession(false) != null
+            && request.getSession(false).getAttribute(SSOAgentConstants.SESSION_BEAN_NAME) == null) {
         request.getSession().invalidate();
 %>
 <script type="text/javascript">
@@ -56,11 +52,11 @@
 <%
         return;
     }
-    LoggedInSessionBean sessionBean = (LoggedInSessionBean)session.getAttribute(SSOAgentConstants.SESSION_BEAN_NAME);
+    LoggedInSessionBean sessionBean = (LoggedInSessionBean) session.getAttribute(SSOAgentConstants.SESSION_BEAN_NAME);
 
-    if(sessionBean != null && sessionBean.getSAML2SSO() != null){
+    if (sessionBean != null && sessionBean.getSAML2SSO() != null) {
         subjectId = sessionBean.getSAML2SSO().getSubjectId();
-        saml2SSOAttributes = sessionBean.getSAML2SSO().getSubjectAttributes();
+        //saml2SSOAttributes = sessionBean.getSAML2SSO().getSubjectAttributes();
     } else {
 %>
 <script type="text/javascript">
@@ -71,7 +67,6 @@
     }
 %>
 
-
 <body>
     <nav id="top" class="navbar navbar-inverse navbar-custom">
         <div class="container-fluid">
@@ -81,13 +76,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Ozone</a>
+                <a class="navbar-brand" href="#"><img src="img/logo.png" height="30" /> Dispatch</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="user-name"><a href="#"><span class="glyphicon glyphicon-user"></span> <span
-                            class="user-name"><%=subjectId%>@ozone.com</span></a></li>
-                    <li><a href=<%=SAML_LOGOUT_URL%>><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                    <!--<li><button class="btn btn-dark custom-primary btn-login"><strong>Login</strong></button></li>-->
+                    <li class="dropdown user-name">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img class="img-circle" height="30" width=30" src="img/Admin-icon.jpg"> <span class="user-name"><%=subjectId%>@pickup.com <i class="fa fa-chevron-down"></i></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href=<%=SAML_LOGOUT_URL%>>Logout</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -98,7 +99,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2><strong>Ozone Dispatch</strong></h2>
+                    <h2><strong>PickUp Dispatch</strong></h2>
                     <p class="lead">A vehicle allocation application used to allocate drivers to vehicles</p>
                 </div>
             </div>
@@ -107,13 +108,11 @@
         <!-- /.container -->
     </section>
 
-    <!-- Services -->
-    <!-- The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/ -->
     <section id="allocations" class="services">
         <div class="container">
             <div class="row text-center">
                 <div class="col-lg-10 col-lg-offset-1">
-                    <h2>Allocations</h2>
+                    <h3>Allocations</h3>
                     <hr class="small">
                     <div class="row">
                         <div class="col-md-3 col-sm-6">
@@ -121,15 +120,14 @@
                         <div class="col-md-3 col-sm-6 tab-nav">
                             <a href="" class=" allocations" >
                                 <div class="service-item">
-                                    <span class="fa-stack fa-4x">
-                                    <i class="fa fa-circle fa-stack-2x custom-primary-color"></i>
+                                    <span class="fa-stack fa-3x">
+                                    <i class="fa fa-circle fa-stack-2x circle "></i>
                                     <i class="fa fa-tasks fa-stack-1x text-link"></i>
                                 </span>
                                     <span class="text-gray">
                                         <h4>
                                             <strong>Create</strong>
                                         </h4>
-                                        <!--<h5>Allocate drivers for vehicles</h5>-->
                                         </br>
                                     </span>
                                 </div>
@@ -139,8 +137,8 @@
                         <div class="col-md-3 col-sm-6 tab-nav">
                             <a href="" class="allocations">
                                 <div class="service-item">
-                                    <span class="fa-stack fa-4x">
-                                    <i class="fa fa-circle fa-stack-2x custom-primary-color"></i>
+                                    <span class="fa-stack fa-3x">
+                                    <i class="fa fa-circle fa-stack-2x circle"></i>
                                     <i class="fa fa-eye fa-stack-1x text-link"></i>
                                 </span>
                                     <span class="text-gray">
@@ -170,8 +168,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 col-lg-offset-1">
-                    <h3 class="text-center">Create New Allocation</h3>
-                    <hr class="small">
+                    <h4 class="text-center">Create New Allocation</h4>
                     <div class="row">
                         <div class="col-lg-6 col-lg-offset-3">
                             <form>
@@ -203,14 +200,22 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Date</label>
-                                    <input type="password" class="form-control" placeholder="Enter allocation date">
+                                    <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Date</label>
+                                        <input type="password" class="form-control" placeholder="Enter allocation date">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Time</label>
+                                        <input type="password" class="form-control" placeholder="Enter allocation time">
+                                    </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Period</label>
-                                    <input type="password" class="form-control"  placeholder="Enter allocation period">
+                                    <input type="password" class="form-control" placeholder="Enter allocation period">
                                 </div>
-                                <button type="submit" class="btn btn-lg btn-dark custom-primary center-block">Allocate</button>
+                                <button type="submit" class="btn btn-lg btn-dark custom-primary center-block">Create</button>
                             </form>
 
                         </div>
@@ -229,16 +234,18 @@
             <div class="row">
                 <div class="col-lg-10 col-lg-offset-1">
                     <!--<hr class="custom-hr">-->
-                    <h3 class="text-center">View Allocations</h3>
-                    <hr class="small">
+                    <h4 class="text-center">View Allocations</h4>
+                    </br>
                     <div class="table-responsive">
                         <table class="table table-bordered" width="100%" id="dataTable" cellspacing="0">
                             <thead>
                             <tr>
                                 <th>Driver</th>
                                 <th>Vehicle</th>
-                                <th>Period</th>
+                                <th>Vehicle No</th>
                                 <th>Date</th>
+                                <th>Time</th>
+                                <th>Period</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -246,22 +253,28 @@
                             <tr>
                                 <td>Tiger Nixon</td>
                                 <td>Car</td>
+                                <td>CN-1234</td>
+                                <td>2017/04/15</td>
+                                <td>07:00</td>
                                 <td>7 days</td>
-                                <td>2011/04/25</td>
                                 <td><i class="fa fa-trash"></i></td>
                             </tr>
                             <tr>
                                 <td>Garrett Winters</td>
                                 <td>Van</td>
-                                <td>15 days</td>
-                                <td>2011/07/25</td>
+                                <td>KC-3543</td>
+                                <td>2017/04/25</td>
+                                <td>02:30</td>
+                                <td>5 days</td>
                                 <td><i class="fa fa-trash"></i></td>
                             </tr>
                             <tr>
                                 <td>Ashton Cox</td>
                                 <td>Car</td>
-                                <td>5 days</td>
-                                <td>2009/01/12</td>
+                                <td>CA-8877</td>
+                                <td>2017/01/12</td>
+                                <td>05:30</td>
+                                <td>10 days</td>
                                 <td><i class="fa fa-trash"></i></td>
                             </tr>
                         </tbody>
@@ -273,14 +286,12 @@
     </section>
 
     <!-- Footer -->
-    <footer>
+    <footer id="footer">
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 col-lg-offset-1 text-center">
-                    <h4><strong>Ozone</strong>
-                    </h4>
-                    <hr class="small">
-                    <p class="text-muted">Copyright &copy; Ozone 2017</p>
+                    <a href="http://wso2.com/" target="_blank" ><img src="img/wso2logo.svg" height="20" /></a>
+                    <p class="text-muted">Copyright &copy; WSO2 2017</p>
                 </div>
             </div>
         </div>
@@ -297,6 +308,7 @@
     <script>
     // Closes the sidebar menu
     $(".allocations").first().addClass('active');
+    $(".allocations .circle").first().addClass('custom-primary-color');
 
     $("#menu-close").click(function(e) {
         e.preventDefault();
@@ -311,8 +323,10 @@
     $(".allocations").click(function(e) {
         e.preventDefault();
         $(".allocations").removeClass('active');
+        $('.circle').removeClass('custom-primary-color');
         $(this).toggleClass("active");
         $('.content').toggleClass('hide');
+        $(this).find('.circle').toggleClass('custom-primary-color');
     });
 
     // Scrolls to the selected menu item on the page
@@ -328,6 +342,15 @@
                     return false;
                 }
             }
+        });
+
+        $("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {
+            e.preventDefault();
+            $(this).siblings('a.active').removeClass("active");
+            $(this).addClass("active");
+            var index = $(this).index();
+            $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+            $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
         });
     });
     //#to-top button appears after scrolling
@@ -355,26 +378,6 @@
             }
         }
     });
-    // Disable Google Maps scrolling
-    // See http://stackoverflow.com/a/25904582/1607849
-    // Disable scroll zooming and bind back the click event
-    var onMapMouseleaveHandler = function(event) {
-        var that = $(this);
-        that.on('click', onMapClickHandler);
-        that.off('mouseleave', onMapMouseleaveHandler);
-        that.find('iframe').css("pointer-events", "none");
-    }
-    var onMapClickHandler = function(event) {
-            var that = $(this);
-            // Disable the click handler until the user leaves the map area
-            that.off('click', onMapClickHandler);
-            // Enable scrolling zoom
-            that.find('iframe').css("pointer-events", "auto");
-            // Handle the mouse leave event
-            that.on('mouseleave', onMapMouseleaveHandler);
-        }
-        // Enable map zooming with mouse scroll when the user clicks the map
-    $('.map').on('click', onMapClickHandler);
     </script>
 
 </body>
