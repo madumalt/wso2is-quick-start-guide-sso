@@ -23,8 +23,15 @@ public class QSGContextEventListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         properties = new Properties();
         try {
-            properties.load(servletContextEvent.getServletContext().getResourceAsStream(
-                    "/WEB-INF/classes/ozone.properties"));
+
+            // if swift.com load the swift property file, otherwise load default dispatch property file
+            if(servletContextEvent.getServletContext().getContextPath().contains("swift.com")) {
+                properties.load(servletContextEvent.getServletContext().getResourceAsStream(
+                        "/WEB-INF/classes/swift.properties"));
+            } else {
+                properties.load(servletContextEvent.getServletContext().
+                        getResourceAsStream("/WEB-INF/classes/dispatch.properties"));
+            }
 
             InputStream keyStoreInputStream = servletContextEvent.getServletContext().
                     getResourceAsStream("/WEB-INF/classes/wso2carbon.jks");
@@ -41,7 +48,7 @@ public class QSGContextEventListener implements ServletContextListener {
                     setAttribute(SSOAgentConstants.CONFIG_BEAN_NAME, config);
 
         } catch (IOException e) {
-            System.out.println("IOException in reading ozone.properties: " + e.getStackTrace());
+            System.out.println("IOException in reading .properties: " + e.getStackTrace());
         } catch (SSOAgentException e){
             System.out.println("SSOAgentException in contextInitialized handler: " + e.getStackTrace());
         }

@@ -2,10 +2,7 @@ package org.wso2.is.sso.quickStartGuide;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.opensaml.saml2.core.Assertion;
-import org.opensaml.saml2.core.EncryptedAssertion;
-import org.opensaml.saml2.core.LogoutResponse;
-import org.opensaml.saml2.core.Response;
+import org.opensaml.saml2.core.*;
 import org.opensaml.xml.XMLObject;
 import org.w3c.dom.NodeList;
 import org.wso2.carbon.identity.sso.agent.SSOAgentConstants;
@@ -29,9 +26,6 @@ import java.util.logging.Level;
  * Created by thilina on 6/22/17.
  */
 public class SSOAgentQSGFilter extends SSOAgentFilter {
-    private static final String USERNAME = "username";
-    private static final String PASSWORD = "password";
-    private static final String CHARACTER_ENCODING = "UTF-8";
 
     private static Properties properties = null;
     protected FilterConfig filterConfig = null;
@@ -60,115 +54,85 @@ public class SSOAgentQSGFilter extends SSOAgentFilter {
         HttpServletRequest request = (HttpServletRequest)servletRequest;
         HttpServletResponse response = (HttpServletResponse)servletResponse;
 
-        //if request is a passive saml2 response, and authentication is a failure redirect to login page
-        if(shouldDirectToLoginPage(request, response, config)) {
-            response.sendRedirect(config.getSAML2SSOURL());
-            return;
-        }
-
         servletRequest.setAttribute(SSOAgentConstants.CONFIG_BEAN_NAME, config);
         super.doFilter(servletRequest, servletResponse, chain);
 
-        if(isLogoutResponse(request, response, config)){
-            response.sendRedirect(config.getSAML2SSOURL());
+        if(shouldForwardToLoginPage(request, response, config)) {
+            forwardToLoginPage(request, response);
         }
     }
 
     /**
-     * Refine this method, just a draft, have lot of inefficiencies
+     * Forward to login page
+     * @param request
+     * @param response
+     * @throws IOException
+     * @throws ServletException
+     */
+    private void forwardToLoginPage(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+        request.getRequestDispatcher("index.jsp").forward(request, response);
+    }
+
+    /**
+     * Checks whether the request should be forward to the login page.
+     * If the request is a SAML SLO || SAML LogoutResponse || SAML NoPassive
+     * will return true, else false
      * @param request
      * @param response
      * @param config
      * @return Boolean
      */
-    private Boolean shouldDirectToLoginPage (HttpServletRequest request,
+    private Boolean shouldForwardToLoginPage (HttpServletRequest request,
                                       HttpServletResponse response,
                                       SSOAgentConfig config) {
         try {
             SSOAgentRequestResolver resolver = new SSOAgentRequestResolver(request, response, config);
-            if(!resolver.isSLORequest() && resolver.isSAML2SSOResponse()){
-                String saml2ResponseString = new String(org.opensaml.xml.util.Base64.decode(
-                        request.getParameter("SAMLResponse")), Charset.forName("UTF-8"));
 
-                XMLObject SAML2response = SSOAgentUtils.unmarshall(saml2ResponseString);
-                NodeList list = SAML2response.getDOM().getElementsByTagNameNS(
-                        "urn:oasis:names:tc:SAML:2.0:protocol", "Response");
-
-                // if a logout response allow normal flow
-                if(SAML2response instanceof LogoutResponse) {
-                    return  false;
-                }
-
-                if(list.getLength() > 0) {
-                    System.out.println("Invalid schema for the SAML2 response. Multiple Response elements found.");
-                    //throw new SSOAgentException("Error occurred while processing SAML2 response.");
-                    return true;
-                } else {
-                    NodeList assertionList = SAML2response.getDOM().getElementsByTagNameNS(
-                            "urn:oasis:names:tc:SAML:2.0:assertion", "Assertion");
-                    if(assertionList.getLength() > 1) {
-                        System.out.println(("Invalid schema for the SAML2 response. Multiple Assertion elements found" +
-                                "."));
-                        //throw new SSOAgentException("Error occurred while processing SAML2 response.");
-                        return true;
-                    } else {
-                        Response saml2Response = (Response) SAML2response;
-                        if(saml2Response.getAssertions() == null || saml2Response.getAssertions().isEmpty()){
-                            //no SAML2 assertion found, redirect to login page
-                            if (this.isNoPassive(saml2Response)) {
-                                //"No Passive", SAML2 response
-                                return true;
-                            } else {
-                                //throw new SSOAgentException("SAML2 Assertion not found in the Response");
-                                return true;
-                            }
-                        } else {
-                            return false;
-                        }
-                    }
-                }
-            } else {
-                return false;
+            // if the request is a SLO request from the IS server should direct to login page
+            if(resolver.isSLORequest()){
+                return true;
             }
-        } catch (SSOAgentException e) {
-            System.out.println("cannot unmarshal " + e);
-            return false;
-        }
-    }
 
-    private Boolean isLogoutResponse (HttpServletRequest request,
-                              HttpServletResponse response,
-                              SSOAgentConfig config){
-        try {
-            SSOAgentRequestResolver resolver = new SSOAgentRequestResolver(request, response, config);
-            if (!resolver.isSLORequest() && resolver.isSAML2SSOResponse()) {
+            if(resolver.isSAML2SSOResponse()){
                 String saml2ResponseString = new String(org.opensaml.xml.util.Base64.decode(
                         request.getParameter("SAMLResponse")), Charset.forName("UTF-8"));
-
                 XMLObject SAML2response = SSOAgentUtils.unmarshall(saml2ResponseString);
 
-                // if a logout response allow normal flow
+                // if a logout response, should direct to login page
                 if (SAML2response instanceof LogoutResponse) {
                     return true;
                 }
+
+                //if cannot authenticate using passive, should direct to login page
+                if(SAML2response instanceof Response){
+                    Response saml2Response = (Response) SAML2response;
+                    if(saml2Response.getAssertions() == null || saml2Response.getAssertions().isEmpty()){
+                        return isNoPassive(saml2Response);
+                    }
+                }
+
             }
+
             return false;
+
         } catch (SSOAgentException e) {
-            System.out.println("cannot unmarshal " + e);
             return false;
         }
     }
 
     /**
-     * Checks whether a given saml2 response is a NoPassive response
+     * Checks whether a given saml2 response is a NoPassive response.
+     * If saml2 response status code is set to 'NoPassive' means, that the
+     * user cannot be authenticated with a passive authentication request.
      * @param response
      * @return boolean
      */
-    protected boolean isNoPassive(Response response) {
+    private boolean isNoPassive(Response response) {
         return response.getStatus() != null
                 && response.getStatus().getStatusCode() != null
-                && response.getStatus().getStatusCode().getValue().equals("urn:oasis:names:tc:SAML:2.0:status:Responder")
+                && response.getStatus().getStatusCode().getValue().equals(StatusCode.RESPONDER_URI)
                 && response.getStatus().getStatusCode().getStatusCode() != null
-                && response.getStatus().getStatusCode().getStatusCode().getValue().equals("urn:oasis:names:tc:SAML:2.0:status:NoPassive");
+                && response.getStatus().getStatusCode().getStatusCode().getValue().equals(StatusCode.NO_PASSIVE_URI);
     }
 }

@@ -8,42 +8,6 @@
     <name>wso2is-quick-start-guide-sso Maven Webapp</name>
 
     <dependencies>
-        <!--&lt;!&ndash; https://mvnrepository.com/artifact/javax.servlet/servlet-api &ndash;&gt;-->
-        <!--<dependency>-->
-            <!--<groupId>javax.servlet</groupId>-->
-            <!--<artifactId>javax.servlet-api</artifactId>-->
-            <!--<version>${javax.servlet-api.version}</version>-->
-        <!--</dependency>-->
-
-        <!--&lt;!&ndash; http://maven.wso2.org/nexus/content/groups/wso2-public/<groupID>/<artifactId>&ndash;&gt;-->
-        <!--<dependency>-->
-            <!--<groupId>org.wso2.carbon.identity.agent.sso.java</groupId>-->
-            <!--<artifactId>org.wso2.carbon.identity.sso.agent</artifactId>-->
-            <!--<version>${org.wso2.carbon.identity.sso.agent.version}</version>-->
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<groupId>opensaml.wso2</groupId>-->
-                    <!--<artifactId>opensaml2</artifactId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<groupId>commons-collections.wso2</groupId>-->
-                    <!--<artifactId>commons-collections</artifactId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
-        <!--</dependency>-->
-
-        <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.apache.ws.commons.axiom/axiom-api &ndash;&gt;-->
-        <!--<dependency>-->
-            <!--<groupId>org.apache.ws.commons.axiom</groupId>-->
-            <!--<artifactId>axiom-api</artifactId>-->
-            <!--<version>${org.apache.ws.commons.axiom-api.version}</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>commons-lang</groupId>-->
-            <!--<artifactId>commons-lang</artifactId>-->
-            <!--<version>${commons-lang.version}</version>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>org.opensaml</groupId>
@@ -135,7 +99,8 @@
     </repositories>
 
     <build>
-        <finalName>ozone.com</finalName>
+        <finalName>swift.com</finalName>
+        <!--<finalName>dispatch.com</finalName>-->
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
