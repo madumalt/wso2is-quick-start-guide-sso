@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app id="travelocity.com" version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+    <display-name>Archetype Created Web Application</display-name>
+    
+    <servlet>
+        <servlet-name>ForwardingServlet</servlet-name>
+        <servlet-class>org.wso2.is.sso.quickStartGuide.ForwardingServlet</servlet-class>
+    </servlet>
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>ForwardingServlet</servlet-name>-->
+        <!--<url-pattern>/home.jsp</url-pattern>-->
+    <!--</servlet-mapping>-->
+    <servlet-mapping>
+        <servlet-name>ForwardingServlet</servlet-name>
+        <url-pattern>/samlsso</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForwardingServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>SSOAgentQSGFilter</filter-name>
+        <filter-class>org.wso2.is.sso.quickStartGuide.SSOAgentQSGFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SSOAgentQSGFilter</filter-name>
+        <url-pattern>*.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>SSOAgentQSGFilter</filter-name>
+        <url-pattern>/samlsso</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>SSOAgentQSGFilter</filter-name>
+        <url-pattern>/logout</url-pattern>
+    </filter-mapping>
+
+    <listener>
+        <listener-class>org.wso2.is.sso.quickStartGuide.QSGContextEventListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>org.wso2.carbon.identity.sso.agent.saml.SSOAgentHttpSessionListener</listener-class>
+    </listener>
+</web-app>
