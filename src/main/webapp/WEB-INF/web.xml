@@ -20,39 +20,49 @@
          xmlns="http://java.sun.com/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <display-name>PickUp</display-name>
 
-    <display-name>Archetype Created Web Application</display-name>
-    
     <servlet>
         <servlet-name>ForwardingServlet</servlet-name>
-        <servlet-class>org.wso2.is.sso.quickStartGuide.ForwardingServlet</servlet-class>
+        <servlet-class>org.wso2.is.sso.qsg.ForwardingServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ForwardingServlet</servlet-name>
-        <url-pattern>/login</url-pattern>
+        <url-pattern>/consumer</url-pattern>
     </servlet-mapping>
 
     <filter>
-        <filter-name>SSOAgentQSGFilter</filter-name>
-        <filter-class>org.wso2.is.sso.quickStartGuide.SSOAgentQSGFilter</filter-class>
+        <filter-name>SSOAgentFilter</filter-name>
+        <filter-class>org.wso2.carbon.identity.sso.agent.SSOAgentFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>SSOAgentQSGFilter</filter-name>
+        <filter-name>SSOAgentFilter</filter-name>
         <url-pattern>*.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
-        <filter-name>SSOAgentQSGFilter</filter-name>
+        <filter-name>SSOAgentFilter</filter-name>
         <url-pattern>/samlsso</url-pattern>
     </filter-mapping>
     <filter-mapping>
-        <filter-name>SSOAgentQSGFilter</filter-name>
+        <filter-name>SSOAgentFilter</filter-name>
         <url-pattern>/logout</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>SSOAgentFilter</filter-name>
+        <url-pattern>/consumer</url-pattern>
     </filter-mapping>
 
     <listener>
-        <listener-class>org.wso2.is.sso.quickStartGuide.QSGContextEventListener</listener-class>
+        <!--no camel-case in packages-->
+        <listener-class>org.wso2.is.sso.qsg.QSGContextEventListener</listener-class>
     </listener>
+    <!--we need this one, because SSOAgent have these listeners-->
     <listener>
         <listener-class>org.wso2.carbon.identity.sso.agent.saml.SSOAgentHttpSessionListener</listener-class>
     </listener>
+
+    <!--TODO add welcome files here and can get these when need to be redirected using servletContext-->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>

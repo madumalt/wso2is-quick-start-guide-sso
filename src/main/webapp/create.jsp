@@ -134,10 +134,10 @@
                         <div class="col-md-3 col-sm-6">
                         </div>
                         <div class="col-md-3 col-sm-6 tab-nav">
-                            <a href="" class=" allocations" >
+                            <a href="create.jsp" class=" allocations active" >
                                 <div class="service-item">
                                     <span class="fa-stack fa-3x">
-                                    <i class="fa fa-circle fa-stack-2x circle "></i>
+                                    <i class="fa fa-circle fa-stack-2x circle custom-primary-color"></i>
                                     <i class="fa fa-tasks fa-stack-1x text-link"></i>
                                 </span>
                                     <span class="text-gray">
@@ -151,7 +151,7 @@
 
                         </div>
                         <div class="col-md-3 col-sm-6 tab-nav">
-                            <a href="" class="allocations">
+                            <a href="view.jsp" class="allocations">
                                 <div class="service-item">
                                     <span class="fa-stack fa-3x">
                                     <i class="fa fa-circle fa-stack-2x circle"></i>
@@ -179,7 +179,7 @@
         <!-- /.container -->
     </section>
 
-    <!-- Create Section -->
+    <!-- Create Section-->
     <section class="create content">
         <div class="container">
             <div class="row">
@@ -244,63 +244,6 @@
         <!-- /.container -->
     </section>
 
-    <!-- View Section -->
-    <section id="view" class="view content hide">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-10 col-lg-offset-1">
-                    <!--<hr class="custom-hr">-->
-                    <h4 class="text-center">View Allocations</h4>
-                    </br>
-                    <div class="table-responsive">
-                        <table class="table table-bordered" width="100%" id="dataTable" cellspacing="0">
-                            <thead>
-                            <tr>
-                                <th>Driver</th>
-                                <th>Vehicle</th>
-                                <th>Vehicle No</th>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>Period</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>Car</td>
-                                <td>CN-1234</td>
-                                <td>2017/04/15</td>
-                                <td>07:00</td>
-                                <td>7 days</td>
-                                <td><i class="fa fa-trash"></i></td>
-                            </tr>
-                            <tr>
-                                <td>Garrett Winters</td>
-                                <td>Van</td>
-                                <td>KC-3543</td>
-                                <td>2017/04/25</td>
-                                <td>02:30</td>
-                                <td>5 days</td>
-                                <td><i class="fa fa-trash"></i></td>
-                            </tr>
-                            <tr>
-                                <td>Ashton Cox</td>
-                                <td>Car</td>
-                                <td>CA-8877</td>
-                                <td>2017/01/12</td>
-                                <td>05:30</td>
-                                <td>10 days</td>
-                                <td><i class="fa fa-trash"></i></td>
-                            </tr>
-                        </tbody>
-                     </table>
-                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer id="footer">
         <div class="container">
@@ -319,82 +262,6 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script>
-    // Closes the sidebar menu
-    $(".allocations").first().addClass('active');
-    $(".allocations .circle").first().addClass('custom-primary-color');
-
-    $("#menu-close").click(function(e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-    });
-    // Opens the sidebar menu
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-    });
-
-    $(".allocations").click(function(e) {
-        e.preventDefault();
-        $(".allocations").removeClass('active');
-        $('.circle').removeClass('custom-primary-color');
-        $(this).toggleClass("active");
-        $('.content').toggleClass('hide');
-        $(this).find('.circle').toggleClass('custom-primary-color');
-    });
-
-    // Scrolls to the selected menu item on the page
-    $(function() {
-        $('a[href*=#]:not([href=#],[data-toggle],[data-target],[data-slide])').click(function() {
-            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
-                var target = $(this.hash);
-                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-                if (target.length) {
-                    $('html,body').animate({
-                        scrollTop: target.offset().top
-                    }, 1000);
-                    return false;
-                }
-            }
-        });
-
-        $("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {
-            e.preventDefault();
-            $(this).siblings('a.active').removeClass("active");
-            $(this).addClass("active");
-            var index = $(this).index();
-            $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
-            $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
-        });
-    });
-    //#to-top button appears after scrolling
-    var fixed = false;
-    $(document).scroll(function() {
-        if ($(this).scrollTop() > 250) {
-            if (!fixed) {
-                fixed = true;
-                // $('#to-top').css({position:'fixed', display:'block'});
-                $('#to-top').show("slow", function() {
-                    $('#to-top').css({
-                        position: 'fixed',
-                        display: 'block'
-                    });
-                });
-            }
-        } else {
-            if (fixed) {
-                fixed = false;
-                $('#to-top').hide("slow", function() {
-                    $('#to-top').css({
-                        display: 'none'
-                    });
-                });
-            }
-        }
-    });
-    </script>
 
 </body>
 

@@ -134,10 +134,10 @@
                         <div class="col-md-3 col-sm-6">
                         </div>
                         <div class="col-md-3 col-sm-6 tab-nav">
-                            <a href="" class=" allocations" >
+                            <a href="create.jsp" class="allocations" >
                                 <div class="service-item">
                                     <span class="fa-stack fa-3x">
-                                    <i class="fa fa-circle fa-stack-2x circle "></i>
+                                    <i class="fa fa-circle fa-stack-2x circle"></i>
                                     <i class="fa fa-tasks fa-stack-1x text-link"></i>
                                 </span>
                                     <span class="text-gray">
@@ -151,10 +151,10 @@
 
                         </div>
                         <div class="col-md-3 col-sm-6 tab-nav">
-                            <a href="" class="allocations">
+                            <a href="view.jsp" class="allocations active">
                                 <div class="service-item">
                                     <span class="fa-stack fa-3x">
-                                    <i class="fa fa-circle fa-stack-2x circle"></i>
+                                    <i class="fa fa-circle fa-stack-2x circle custom-primary-color"></i>
                                     <i class="fa fa-eye fa-stack-1x text-link"></i>
                                 </span>
                                     <span class="text-gray">
@@ -179,73 +179,8 @@
         <!-- /.container -->
     </section>
 
-    <!-- Create Section -->
-    <section class="create content">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-10 col-lg-offset-1">
-                    <h4 class="text-center">Create New Allocation</h4>
-                    <div class="row">
-                        <div class="col-lg-6 col-lg-offset-3">
-                            <form>
-                                <div class="form-group">
-                                    <label>Driver</label>
-                                    <select class="form-control" id="sel1">
-                                        <option selected>Select a driver</option>
-                                        <option >John</option>
-                                        <option>David</option>
-                                        <option>Jeffery</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Vehicle</label>
-                                    <select class="form-control" id="sel1">
-                                        <option selected>Select a vehicle</option>
-                                        <option>Car</option>
-                                        <option>Van</option>
-                                        <option>Jeep</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Vehicle Number</label>
-                                    <select class="form-control" id="sel1">
-                                        <option selected>Select a vehicle number</option>
-                                        <option>CA-1234</option>
-                                        <option>KN-4567</option>
-                                        <option>CJ-8910</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Date</label>
-                                        <input type="password" class="form-control" placeholder="Enter allocation date">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label>Time</label>
-                                        <input type="password" class="form-control" placeholder="Enter allocation time">
-                                    </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Period</label>
-                                    <input type="password" class="form-control" placeholder="Enter allocation period">
-                                </div>
-                                <button type="submit" class="btn btn-lg btn-dark custom-primary center-block">Create</button>
-                            </form>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- /.col-lg-10 -->
-            </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.container -->
-    </section>
-
     <!-- View Section -->
-    <section id="view" class="view content hide">
+    <section id="view" class="view content">
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 col-lg-offset-1">
@@ -319,82 +254,6 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script>
-    // Closes the sidebar menu
-    $(".allocations").first().addClass('active');
-    $(".allocations .circle").first().addClass('custom-primary-color');
-
-    $("#menu-close").click(function(e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-    });
-    // Opens the sidebar menu
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#sidebar-wrapper").toggleClass("active");
-    });
-
-    $(".allocations").click(function(e) {
-        e.preventDefault();
-        $(".allocations").removeClass('active');
-        $('.circle').removeClass('custom-primary-color');
-        $(this).toggleClass("active");
-        $('.content').toggleClass('hide');
-        $(this).find('.circle').toggleClass('custom-primary-color');
-    });
-
-    // Scrolls to the selected menu item on the page
-    $(function() {
-        $('a[href*=#]:not([href=#],[data-toggle],[data-target],[data-slide])').click(function() {
-            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
-                var target = $(this.hash);
-                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-                if (target.length) {
-                    $('html,body').animate({
-                        scrollTop: target.offset().top
-                    }, 1000);
-                    return false;
-                }
-            }
-        });
-
-        $("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {
-            e.preventDefault();
-            $(this).siblings('a.active').removeClass("active");
-            $(this).addClass("active");
-            var index = $(this).index();
-            $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
-            $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
-        });
-    });
-    //#to-top button appears after scrolling
-    var fixed = false;
-    $(document).scroll(function() {
-        if ($(this).scrollTop() > 250) {
-            if (!fixed) {
-                fixed = true;
-                // $('#to-top').css({position:'fixed', display:'block'});
-                $('#to-top').show("slow", function() {
-                    $('#to-top').css({
-                        position: 'fixed',
-                        display: 'block'
-                    });
-                });
-            }
-        } else {
-            if (fixed) {
-                fixed = false;
-                $('#to-top').hide("slow", function() {
-                    $('#to-top').css({
-                        display: 'none'
-                    });
-                });
-            }
-        }
-    });
-    </script>
 
 </body>
 
