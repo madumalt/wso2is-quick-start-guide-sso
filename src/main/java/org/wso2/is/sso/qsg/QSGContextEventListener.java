@@ -23,6 +23,7 @@ import org.wso2.carbon.identity.sso.agent.SSOAgentException;
 import org.wso2.carbon.identity.sso.agent.bean.SSOAgentConfig;
 import org.wso2.carbon.identity.sso.agent.saml.SSOAgentX509Credential;
 import org.wso2.carbon.identity.sso.agent.saml.SSOAgentX509KeyStoreCredential;
+import org.wso2.is.sso.qsg.util.QSGConstants;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,7 +39,7 @@ import javax.servlet.ServletContextListener;
  */
 public class QSGContextEventListener implements ServletContextListener {
 
-    private static Logger LOGGER = Logger.getLogger("org.wso2.is.sso.qsg");
+    private static Logger LOGGER = Logger.getLogger(QSGConstants.LOGGER_NAME);
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
