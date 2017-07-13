@@ -147,7 +147,7 @@
                 </div>
             </div>
             <div class="col-lg-11 col-md-11 col-sm-11 col-xs-9 bhoechie-tab">
-                <!-- flight section -->
+                <!-- Overview section -->
                 <div class="bhoechie-tab-content active">
                     <div class="tile-container">
                         <div class="row">
@@ -198,7 +198,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- train section -->
+                <!-- Drivers section -->
                 <div class="bhoechie-tab-content">
                     <h4 class="text-left"><strong>Drivers</strong></h4>
                     <div class="table-responsive">
@@ -271,7 +271,7 @@
                     </div>
                 </div>
 
-                <!-- hotel search -->
+                <!-- Vehicles Section -->
                 <div class="bhoechie-tab-content">
 
                     <h4 class="text-left"><strong>Vehicles</strong></h4>
@@ -337,6 +337,8 @@
                         <a href="javascript:;" class="btn btn-default"><i class="fa fa-plus"></i> Add</a>
                     </div>
                 </div>
+
+                <!-- Bookings section -->
                 <div class="bhoechie-tab-content">
                     <h4 class="text-left"><strong>Bookings</strong></h4>
                     <div class="table-responsive">
@@ -400,6 +402,8 @@
                         <a href="javascript:;" class="btn btn-default"><i class="fa fa-plus"></i> Add</a>
                     </div>
                 </div>
+
+                <!-- Finance Section -->
                 <div class="bhoechie-tab-content">
                     <h4 class="text-left"><strong>Finance</strong></h4>
                     <div class="table-responsive">

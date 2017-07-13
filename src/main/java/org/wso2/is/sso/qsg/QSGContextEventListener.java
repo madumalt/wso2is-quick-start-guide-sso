@@ -16,38 +16,38 @@
  * under the License.
  */
 
-package org.wso2.is.sso.quickStartGuide;
+package org.wso2.is.sso.qsg;
 
 import org.wso2.carbon.identity.sso.agent.SSOAgentConstants;
 import org.wso2.carbon.identity.sso.agent.SSOAgentException;
 import org.wso2.carbon.identity.sso.agent.bean.SSOAgentConfig;
 import org.wso2.carbon.identity.sso.agent.saml.SSOAgentX509Credential;
 import org.wso2.carbon.identity.sso.agent.saml.SSOAgentX509KeyStoreCredential;
+import org.wso2.is.sso.qsg.util.QSGConstants;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+
 
 /**
- * Context Event Listener Class used to do the necessary initializations of the App
+ * Context Event Listener Class used to do the necessary initializations of the App.
  */
 public class QSGContextEventListener implements ServletContextListener {
 
-    private static Logger LOGGER = Logger.getLogger("org.wso2.is.sso.quickStartGuide");
-
-    private static Properties properties = null;
+    private static Logger LOGGER = Logger.getLogger(QSGConstants.LOGGER_NAME);
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        properties = new Properties();
+        Properties properties = new Properties();
         try {
 
             // if swift.com load the swift property file, otherwise load default dispatch property file
-            if(servletContextEvent.getServletContext().getContextPath().contains("swift.com")) {
+            if (servletContextEvent.getServletContext().getContextPath().contains("swift.com")) {
                 properties.load(servletContextEvent.getServletContext().getResourceAsStream(
                         "/WEB-INF/classes/swift.properties"));
             } else {
@@ -71,7 +71,7 @@ public class QSGContextEventListener implements ServletContextListener {
 
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
-        } catch (SSOAgentException e){
+        } catch (SSOAgentException e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
     }
@@ -79,9 +79,5 @@ public class QSGContextEventListener implements ServletContextListener {
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
 
-    }
-
-    public static Properties getProperties() {
-        return properties;
     }
 }
