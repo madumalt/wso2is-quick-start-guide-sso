@@ -16,7 +16,7 @@
 ~ under the License.
 -->
 <%@ page import="org.wso2.carbon.identity.sso.agent.bean.LoggedInSessionBean" %>
-<%@ page import="org.wso2.carbon.identity.sso.agent.SSOAgentConstants" %>
+<%@ page import="org.wso2.carbon.identity.sso.agent.util.SSOAgentConstants" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
